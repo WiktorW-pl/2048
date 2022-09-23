@@ -1,53 +1,74 @@
-const tile = document.querySelector('.number');
-const gameboad = document.querySelectorAll('.tile');
-// type basePosition = {
-//     top: number;
-//     left: number;
-// }
-let topP = 0;
-let leftP = 0;
-const newNumbers = {};
-const createNewNumber = () => {
-    const newNumber = document.createElement('div');
-    newNumber.classList.add('number');
-    newNumber.textContent = '2';
-    let minTop = Math.ceil(0);
-    let maxTop = Math.floor(16);
-    const randomIndex = Math.floor(Math.random() * (maxTop - minTop + 1)) + minTop;
-    newNumber.appendChild(gameboad[randomIndex]);
-};
+const tile = document.querySelector('.tile__number');
+const emptyTile = document.querySelectorAll('.tile');
+
+let topPosition = 0;
+let leftPosition = 0;
+
+
+//Obiek przechowywujący współrzędne pól wyłączonych z użyktu (nie może tam zostać stworzony kolejny element)
+const usedPosition = {
+    usedTop: [],
+    usedLeft: [],
+}
+
+
+//CreateNewTile- Funkcja ma tworzyć nowy bloczek z liczbą, bloczek ma być tworzony w losowym kwadracie, a współrzędne tego bloczka mają zostać przekazane do obiektu usedPosition, tak, aby nie możliwe było tam już utworzenie kolejnego elementu
+const createNewTile = (usedPosition) =>{
+    const newTile = document.createElement('div');
+    newTile.classList.add('tile__number')
+//  emptyTile[randomIndex].appendChild(newTile);
+
+    // let rect = newTile.getBoundingClientRect()
+    // console.log("x: "+ rect.left);
+    // console.log("y: "+ rect.top);
+}
+
 const moveRight = () => {
-    if (leftP === 600)
-        return;
-    leftP += 600;
-    tile.style.left = leftP + "px";
-    console.log(leftP);
-    createNewNumber();
+    if (leftPosition === 600) return;
+
+    leftPosition += 600;
+    tile.style.left = leftPosition + "px";
+    usedPosition.usedTop = topPosition;
+    usedPosition.usedLeft = leftPosition;
+    console.log(usedPosition)
+    createNewTile(usedPosition);
 };
+
 const moveLeft = () => {
-    if (leftP === 0)
-        return;
-    leftP -= 600;
-    tile.style.left = leftP + "px";
-    console.log(leftP);
-    createNewNumber();
+    if (leftPosition === 0) return;
+
+    leftPosition -= 600;
+    tile.style.left = leftPosition + "px";
+    usedPosition.usedTop = topPosition;
+    usedPosition.usedLeft = leftPosition;
+    console.log(usedPosition)
+    // createNewNumber();
 };
+
 const moveDown = () => {
-    if (topP === 0)
-        return;
-    topP -= 600;
-    tile.style.top = topP + "px";
-    console.log(topP);
-    createNewNumber();
+    if (topPosition === 0) return;
+
+    topPosition -= 600;
+    tile.style.top = topPosition + "px";
+    usedPosition.usedTop = topPosition;
+    usedPosition.usedLeft = leftPosition;
+    console.log(usedPosition)
+    // createNewNumber();
 };
+
 const moveUp = () => {
-    if (topP === 600)
-        return;
-    topP += 600;
-    tile.style.top = topP + "px";
-    console.log(topP);
-    createNewNumber();
+    if (topPosition === 600) return;
+
+    topPosition += 600;
+    tile.style.top = topPosition + "px";
+    usedPosition.usedTop = topPosition;
+    usedPosition.usedLeft = leftPosition;
+    console.log(usedPosition)
+    // createNewNumber();
 };
+
+
+//sterowanie:
 window.addEventListener("keydown", (e) => {
     if (e.keyCode === 39)
         moveRight();
@@ -58,4 +79,10 @@ window.addEventListener("keydown", (e) => {
     if (e.keyCode === 40)
         moveUp();
 });
-//Stworzyć obiekt, w którym przechowywane byłby wartościu pól wyłączonych z użyktu
+
+
+// Rzeczy do zrobienia: 
+// 1. Napisanie mechanizmu, który odczytuje współrzędne pojedyńczego, inicjującego bloczka
+// 2. Funkcja losująca współrzędne nowo wygenerowanego bloczka
+// 3. Funkcja, który odczytuje współrzędne nowo wygenerowanego bloczka i przekazuje je do obiektu usedPosition
+// 4. Przy każdym ruchu gracza bloczki układają się maksymalnie blisko siebie, ale nigdy jeden na drugim (użyć danych z usedPosition)
