@@ -3,40 +3,71 @@
   color: #fff;
 }
 
-body {
-  background-color: #232323;
+*, *::before, *::after {
+  box-sizing: border-box;
 }
 
-.container {
-  width: 100%;
-  height: 100vh;
+body {
+  background-color: #232323;
   display: flex;
   justify-content: center;
   align-items: center;
+  height: 100vh;
+  margin: 0;
+  font-size: 7.5vmin;
 }
 
 .game-board {
-  border: 2px solid #fff;
-  width: 808px;
-  height: 808px;
-  display: flex;
-  flex-wrap: wrap;
-  position: absolute;
+  --grid-size: 4;
+  --cell-size: 20vmin;
+  --cell-gap: 2vmin;
+  display: grid;
+  grid-template-columns: repeat(4, 20vmin);
+  grid-template-rows: repeat(4, 20vmin);
+  background-color: #fff;
+  gap: 2vmin;
+  border-radius: 1vmin;
+  padding: 2vmin;
+  position: relative;
+}
+
+.cell {
+  background-color: #4d4d4d;
+  border-radius: 1vmin;
 }
 
 .tile {
-  width: 200px;
-  height: 200px;
-  background-color: rgb(105, 105, 105);
-  border: 1px solid red;
-}
-.tile__number {
-  position: relative;
-  font-size: 60px;
-  width: 98%;
-  height: 98%;
+  --x: 1;
+  --y: 2;
+  --background-lghhtness: 80%;
+  --text-lightness: 20%;
+  position: absolute;
   display: flex;
-  justify-content: center;
   align-items: center;
-  background-color: rgb(0, 183, 255);
+  justify-content: center;
+  width: 20vmin;
+  height: 20vmin;
+  border-radius: 1vmin;
+  top: calc(var(--y) * (var(--cell-size) + var(-cell-gap)) + var(-cell-gap));
+  left: calc(var(--x) * (var(--cell-size) + var(-cell-gap)) + var(-cell-gap));
+  font-weight: bold;
+  background-color: hsl(200, 50%, var(--background-lghhtness));
+  color: hsl(200, 50%, var(--text-lghhtness));
+  -webkit-animation: show 200ms ease-in-out;
+          animation: show 200ms ease-in-out;
+  transition: 100ms ease-in-out;
+}
+
+@-webkit-keyframes show {
+  0% {
+    opacity: 0.5;
+    transform: scale(0);
+  }
+}
+
+@keyframes show {
+  0% {
+    opacity: 0.5;
+    transform: scale(0);
+  }
 }/*# sourceMappingURL=style.css.map */
